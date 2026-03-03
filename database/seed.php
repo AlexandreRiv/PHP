@@ -179,6 +179,69 @@ $achievements = [
     ],
 ];
 
+// ════════════════════════════════════════════════════════════════
+// NIVEAUX PAR JEU
+// ════════════════════════════════════════════════════════════════
+
+$levels = [
+    'Hollow Knight: Silksong' => [
+        ['Royaume des brumes',    'easy',    'La zone de départ, idéale pour apprendre les mécaniques de base.'],
+        ['Forêt des aiguilles',   'medium',  'Une forêt dense peuplée d\'ennemis agiles et de pièges.'],
+        ['Sanctuaire de la soie', 'hard',    'Zone avancée avec des boss redoutables gardant des secrets anciens.'],
+        ['Cœur du royaume',       'extreme', 'La zone finale, réservée aux joueurs les plus expérimentés.'],
+    ],
+    'GTA VI' => [
+        ['Vice City Downtown',    'easy',    'Le centre-ville, zone de départ avec des missions d\'introduction.'],
+        ['Les Everglades',        'medium',  'Les marais de Floride, terrain hostile avec des gangs locaux.'],
+        ['Port industriel',       'hard',    'Zone contrôlée par un cartel, missions de braquage complexes.'],
+        ['Quartier fédéral',      'extreme', 'Zone ultra-surveillée, missions furtives à haute difficulté.'],
+    ],
+    'Elden Ring' => [
+        ['Limgrave',              'easy',    'Les plaines de départ des Terres Intermédiaires.'],
+        ['Liurnia des Lacs',      'medium',  'Un vaste lac entouré de ruines magiques et de sorciers.'],
+        ['Altus Plateau',         'hard',    'Les hautes terres gardées par de puissants chevaliers dorés.'],
+        ['Farum Azula',           'extreme', 'Une cité déchue suspendue dans une tempête éternelle.'],
+    ],
+    'Minecraft' => [
+        ['Surface',               'easy',    'Le monde de surface, idéal pour débuter et récolter des ressources.'],
+        ['Grottes profondes',     'medium',  'Les cavernes du monde souterrain, riches en minerais rares.'],
+        ['Nether',                'hard',    'Une dimension infernale avec des créatures dangereuses.'],
+        ['L\'End',                'extreme', 'La dimension finale, domaine de l\'Ender Dragon.'],
+    ],
+    'Cyberpunk 2077' => [
+        ['Watson',                'easy',    'Le quartier de départ de V, zone industrielle en déclin.'],
+        ['Westbrook',             'medium',  'Le quartier des night-clubs et des corporations technologiques.'],
+        ['City Center',           'hard',    'Le cœur de Night City, contrôlé par Arasaka.'],
+        ['Pacifica',              'extreme', 'Zone abandonnée par les autorités, territoire des Animals.'],
+    ],
+    'The Legend of Zelda: Tears of the Kingdom' => [
+        ['Île du Sanctuaire',     'easy',    'L\'île tutoriel flottant au-dessus d\'Hyrule.'],
+        ['Plaine d\'Hyrule',      'medium',  'Les vastes plaines centrales parsemées de sanctuaires.'],
+        ['Les profondeurs',       'hard',    'Le monde souterrain obscur caché sous Hyrule.'],
+        ['Temple du Crépuscule',  'extreme', 'Le donjon final gardé par Ganondorf lui-même.'],
+    ],
+    'Baldur\'s Gate 3' => [
+        ['Côte de la Désolation', 'easy',    'La zone de départ après le crash du nautilöide.'],
+        ['Underdark',             'medium',  'Le monde souterrain peuplé de créatures mystérieuses.'],
+        ['Moonrise Towers',       'hard',    'La forteresse du culte de l\'Absolu.'],
+        ['Baldur\'s Gate',        'extreme', 'La ville finale, théâtre de la confrontation ultime.'],
+    ],
+];
+
+$stmtLvl = $db->prepare('
+    INSERT OR IGNORE INTO levels (game_id, name, difficulty, description)
+    VALUES (?, ?, ?, ?)
+');
+
+foreach ($levels as $gameName => $levelList) {
+    $gid = $gameIds[$gameName] ?? null;
+    if (!$gid) continue;
+    foreach ($levelList as [$name, $difficulty, $desc]) {
+        $stmtLvl->execute([$gid, $name, $difficulty, $desc]);
+    }
+    echo "✓ Niveaux ajoutés pour '{$gameName}'\n";
+}
+
 $stmtAch = $db->prepare('
     INSERT OR IGNORE INTO achievements (game_id, name, description, rarity)
     VALUES (?, ?, ?, ?)

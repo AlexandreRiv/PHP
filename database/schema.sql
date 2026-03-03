@@ -47,3 +47,12 @@ CREATE TABLE IF NOT EXISTS user_achievements (
                                                  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
                                                  FOREIGN KEY (achievement_id) REFERENCES achievements(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS levels (
+                                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                      game_id INTEGER NOT NULL,
+                                      name TEXT NOT NULL,
+                                      difficulty TEXT NOT NULL DEFAULT 'medium' CHECK (difficulty IN ('easy', 'medium', 'hard', 'extreme')),
+    description TEXT,
+    FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
+    );
