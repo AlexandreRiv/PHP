@@ -1,0 +1,58 @@
+<?php
+
+/**
+ * Vérifie si l'utilisateur est connecté.
+ */
+function isLoggedIn(): bool {
+    return isset($_SESSION['user']);
+}
+
+/**
+ * Vérifie si l'utilisateur est administrateur.
+ */
+function isAdmin(): bool {
+    return isLoggedIn() && ($_SESSION['user']['role'] ?? '') === 'admin';
+}
+
+/**
+ * Redirige vers la page de connexion si l'utilisateur n'est pas connecté.
+ */
+function requireLogin(): void {
+    if (!isLoggedIn()) {
+        header('Location: /pages/auth/login.php');
+        exit;
+    }
+}
+
+/**
+ * Redirige vers l'accueil si l'utilisateur n'est pas admin.
+ */
+function requireAdmin(): void {
+    requireLogin();
+    if (!isAdmin()) {
+        header('Location: /index.php');
+        exit;
+    }
+}
+
+/**
+ * Connecte un utilisateur et stocke ses données en session.
+ */
+function loginUser(array $user): void {
+    $_SESSION['user'] = [
+        'id'         => $user['id'],
+        'username'   => $user['username'],
+        'email'      => $user['email'],
+        'role'       => $user['role'],
+        'gender'     => $user['gender'],
+        'created_at' => $user['created_at'],
+    ];
+}
+
+/**
+ * Déconnecte l'utilisateur.
+ */
+function logoutUser(): void {
+    $_SESSION = [];
+    session_destroy();
+}
