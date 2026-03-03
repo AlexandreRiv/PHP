@@ -14,6 +14,8 @@ require_once __DIR__ . '/../includes/auth.php';
                class="text-gray-400 hover:text-gold transition font-medium">Accueil</a>
             <a href="/pages/games/index.php"
                class="text-gray-400 hover:text-gold transition font-medium">Jeux</a>
+            <a href="/pages/user/collection.php"
+               class="text-gray-400 hover:text-gold transition font-medium">Ma collection</a>
 
             <?php if (isLoggedIn()): ?>
                 <?php if (isAdmin()): ?>

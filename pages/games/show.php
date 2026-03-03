@@ -113,6 +113,30 @@ include __DIR__ . '/../../includes/header.php';
             </div>
         <?php endif; ?>
 
+        <!-- Ajouter / Retirer de la collection -->
+        <?php if (isLoggedIn()): ?>
+            <?php
+            $inCollection = false;
+            $stmtCol = $db->prepare('SELECT id FROM user_games WHERE user_id = ? AND game_id = ?');
+            $stmtCol->execute([$_SESSION['user']['id'], $game['id']]);
+            $inCollection = (bool)$stmtCol->fetch();
+            ?>
+            <div class="mt-6">
+                <?php if ($inCollection): ?>
+                    <a href="/pages/games/remove_from_collection.php?id=<?= $game['id'] ?>"
+                       onclick="return confirm('Retirer ce jeu de votre collection ?')"
+                       class="inline-block border border-red-500/50 text-red-400 px-6 py-2.5 rounded-lg hover:bg-red-500/20 transition font-medium text-sm">
+                        🗑️ Retirer de ma collection
+                    </a>
+                <?php else: ?>
+                    <a href="/pages/games/add_to_collection.php?id=<?= $game['id'] ?>"
+                       class="inline-block bg-linear-to-br from-gold to-gold-dark text-tft-dark font-tft font-bold px-6 py-2.5 rounded-lg hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all text-sm">
+                        ➕ Ajouter à ma collection
+                    </a>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+
         <div class="mt-6">
             <a href="/pages/games/index.php" class="text-gray-400 hover:text-gold transition text-sm">← Retour au
                 catalogue</a>
