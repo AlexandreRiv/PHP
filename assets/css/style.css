@@ -48,6 +48,17 @@
     cursor: pointer;
 }
 
+.carousel-item.active {
+    cursor: pointer;
+}
+
+/* ── Lien carte ── */
+.carousel-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
 /* ── Prix au-dessus ── */
 .carousel-price {
     font-size: 0.85rem;

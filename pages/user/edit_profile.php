@@ -68,7 +68,7 @@ include __DIR__ . '/../../includes/header.php';
 
         <?php if (!empty($errors)): ?>
             <div class="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 mb-6 text-red-400 text-sm space-y-1">
-                <?php foreach ($errors as $err): ?><p>⚠ <?= e($err) ?></p><?php endforeach; ?>
+                <?php foreach ($errors as $err): ?><p><?= e($err) ?></p><?php endforeach; ?>
             </div>
         <?php endif; ?>
 
@@ -106,7 +106,7 @@ include __DIR__ . '/../../includes/header.php';
             <div class="flex gap-4 pt-2">
                 <button type="submit"
                         class="flex-1 bg-linear-to-br from-gold to-gold-dark text-tft-dark font-tft font-bold py-3 rounded-lg hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all">
-                    💾 Enregistrer
+                    Enregistrer
                 </button>
                 <a href="/pages/user/profile.php"
                    class="px-6 py-3 border border-tft-border text-gray-400 rounded-lg hover:border-gold hover:text-gold transition text-sm flex items-center">
@@ -124,7 +124,7 @@ include __DIR__ . '/../../includes/header.php';
             </p>
             <button onclick="document.getElementById('delete-modal').classList.remove('hidden')"
                     class="border border-red-500/50 text-red-400 px-5 py-2.5 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition font-medium text-sm cursor-pointer">
-                🗑️ Supprimer mon compte
+                Supprimer mon compte
             </button>
         </div>
     </div>
@@ -146,7 +146,7 @@ include __DIR__ . '/../../includes/header.php';
                 <div class="flex gap-3 pt-2">
                     <button type="submit"
                             class="flex-1 bg-red-600 hover:bg-red-700 text-white font-tft font-bold py-3 rounded-lg transition-all cursor-pointer">
-                        🗑️ Confirmer la suppression
+                        Confirmer la suppression
                     </button>
                     <button type="button" onclick="document.getElementById('delete-modal').classList.add('hidden')"
                             class="px-6 py-3 border border-tft-border text-gray-400 rounded-lg hover:border-gold hover:text-gold transition text-sm cursor-pointer">

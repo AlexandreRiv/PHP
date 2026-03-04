@@ -93,7 +93,7 @@ function rarityConfig(string $rarity): array {
  */
 function abort(int $code = 404, string $message = 'Page introuvable'): void {
     http_response_code($code);
-    $pageTitle = $code . ' — OAPDN';
+    $pageTitle = $code . ' — TFT Collection';
     include __DIR__ . '/../includes/header.php';
     echo '
     <div class="max-w-xl mx-auto px-4 py-32 text-center">

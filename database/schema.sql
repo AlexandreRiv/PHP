@@ -15,6 +15,7 @@ CREATE TABLE IF NOT EXISTS games (
                                      type TEXT NOT NULL,
                                      description TEXT,
                                      image TEXT,
+                                     price REAL NOT NULL DEFAULT 0,
                                      created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 

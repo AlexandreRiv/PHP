@@ -73,21 +73,21 @@ foreach ($users as $u) {
 // ════════════════════════════════════════════════════════════════
 
 $games = [
-    ['Hollow Knight: Silksong',                      'Action / Aventure',   'Incarnez Hornet, chasseresse et princesse, dans une toute nouvelle aventure à travers un royaume hanté par la soie et les chants.',         '/assets/images/silksong.png'],
-    ['GTA VI',                                        'Action / Open World', 'Plongez dans un monde ouvert immense inspiré de Vice City, avec une histoire explosive mettant en scène deux protagonistes.',               '/assets/images/gta6.png'],
-    ['Elden Ring',                                    'RPG / Action',        'Explorez un vaste monde créé par Hidetaka Miyazaki et George R.R. Martin. Affrontez des créatures colossales.',                            '/assets/images/eldenRing.png'],
-    ['Minecraft',                                     'Sandbox / Survie',    'Construisez, explorez et survivez dans un monde infini généré procéduralement.',                                                            '/assets/images/minecraft.png'],
-    ['Cyberpunk 2077',                                'RPG / FPS',           'Incarnez V, un mercenaire dans la mégapole dystopique de Night City.',                                                                       '/assets/images/cyberpunk.png'],
-    ['The Legend of Zelda: Tears of the Kingdom',    'Action / Aventure',   'Partez à la découverte d\'Hyrule et de ses mystérieux îles célestes.',                                                                       '/assets/images/zelda.png'],
-    ['Baldur\'s Gate 3',                              'RPG / Tour par tour', 'Un RPG basé sur Donjons & Dragons où chaque choix compte.',                                                                                  '/assets/images/bg3.png'],
+    ['Hollow Knight: Silksong',                      'Action / Aventure',   'Incarnez Hornet, chasseresse et princesse, dans une toute nouvelle aventure à travers un royaume hanté par la soie et les chants.',         '/assets/images/silksong.png',   29.99],
+    ['GTA VI',                                        'Action / Open World', 'Plongez dans un monde ouvert immense inspiré de Vice City, avec une histoire explosive mettant en scène deux protagonistes.',               '/assets/images/gta6.png',       69.99],
+    ['Elden Ring',                                    'RPG / Action',        'Explorez un vaste monde créé par Hidetaka Miyazaki et George R.R. Martin. Affrontez des créatures colossales.',                            '/assets/images/eldenRing.png',  49.99],
+    ['Minecraft',                                     'Sandbox / Survie',    'Construisez, explorez et survivez dans un monde infini généré procéduralement.',                                                            '/assets/images/minecraft.png',  23.95],
+    ['Cyberpunk 2077',                                'RPG / FPS',           'Incarnez V, un mercenaire dans la mégapole dystopique de Night City.',                                                                       '/assets/images/cyberpunk.png', 39.99],
+    ['The Legend of Zelda: Tears of the Kingdom',    'Action / Aventure',   'Partez à la découverte d\'Hyrule et de ses mystérieux îles célestes.',                                                                       '/assets/images/zelda.png',     59.99],
+    ['Baldur\'s Gate 3',                              'RPG / Tour par tour', 'Un RPG basé sur Donjons & Dragons où chaque choix compte.',                                                                                  '/assets/images/bg3.png',       59.99],
 ];
 
-$stmtGame = $db->prepare('INSERT OR IGNORE INTO games (name, type, description, image) VALUES (?, ?, ?, ?)');
+$stmtGame = $db->prepare('INSERT OR IGNORE INTO games (name, type, description, image, price) VALUES (?, ?, ?, ?, ?)');
 $gameIds  = [];
-foreach ($games as [$name, $type, $desc, $img]) {
-    $stmtGame->execute([$name, $type, $desc, $img]);
+foreach ($games as [$name, $type, $desc, $img, $price]) {
+    $stmtGame->execute([$name, $type, $desc, $img, $price]);
     $gameIds[$name] = $db->lastInsertId();
-    echo "✓ Jeu '$name' créé\n";
+    echo "  Jeu '$name' cree\n";
 }
 
 // ════════════════════════════════════════════════════════════════

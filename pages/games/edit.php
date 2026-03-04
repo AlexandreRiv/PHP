@@ -21,17 +21,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     verifyCsrf();
 
     $old = [
+            'name' => trim($_POST['name'] ?? ''),
             'type' => trim($_POST['type'] ?? ''),
             'description' => trim($_POST['description'] ?? ''),
             'image' => trim($_POST['image'] ?? ''),
+            'price' => trim($_POST['price'] ?? '0'),
     ];
 
     if (empty($old['name'])) $errors['name'] = 'Le nom est obligatoire.';
     if (empty($old['type'])) $errors['type'] = 'Le genre est obligatoire.';
 
     if (empty($errors)) {
-        $stmt = $db->prepare('UPDATE games SET name=?, type=?, description=?, image=? WHERE id=?');
-        $stmt->execute([$old['name'], $old['type'], $old['description'], $old['image'] ?: null, $id]);
+        $stmt = $db->prepare('UPDATE games SET name=?, type=?, description=?, image=?, price=? WHERE id=?');
+        $stmt->execute([$old['name'], $old['type'], $old['description'], $old['image'] ?: null, (float)$old['price'], $id]);
         setFlash('Jeu mis à jour avec succès !', 'success');
         redirect('/pages/games/show.php?id=' . $id);
     }
@@ -48,7 +50,7 @@ include __DIR__ . '/../../includes/header.php';
 
         <?php if (!empty($errors)): ?>
             <div class="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 mb-6 text-red-400 text-sm space-y-1">
-                <?php foreach ($errors as $err): ?><p>⚠ <?= e($err) ?></p><?php endforeach; ?>
+                <?php foreach ($errors as $err): ?><p><?= e($err) ?></p><?php endforeach; ?>
             </div>
         <?php endif; ?>
 
@@ -75,10 +77,16 @@ include __DIR__ . '/../../includes/header.php';
                        placeholder="https://..."
                        class="w-full bg-tft-card-deep border border-tft-border rounded-lg px-4 py-3 text-gray-200 focus:border-gold outline-none transition-all">
             </div>
+            <div>
+                <label for="price" class="block text-sm font-medium text-gold-light mb-1">Prix (en euros)</label>
+                <input type="number" id="price" name="price" step="0.01" min="0" value="<?= e($old['price'] ?? '0') ?>"
+                       placeholder="29.99"
+                       class="w-full bg-tft-card-deep border border-tft-border rounded-lg px-4 py-3 text-gray-200 focus:border-gold outline-none transition-all">
+            </div>
             <div class="flex gap-4">
                 <button type="submit"
                         class="flex-1 bg-linear-to-br from-gold to-gold-dark text-tft-dark font-tft font-bold py-3 rounded-lg text-lg hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all">
-                    💾 Enregistrer
+                    Enregistrer
                 </button>
                 <a href="/pages/games/show.php?id=<?= $id ?>"
                    class="px-6 py-3 border border-tft-border text-gray-400 rounded-lg hover:border-gold hover:text-gold transition text-sm flex items-center">

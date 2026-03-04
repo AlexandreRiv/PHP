@@ -54,7 +54,7 @@ include __DIR__ . '/../../includes/header.php';
 
             <?php if (isset($errors['global'])): ?>
                 <div class="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 mb-6 text-red-400 text-sm">
-                    ⚠ <?= e($errors['global']) ?>
+                    <?= e($errors['global']) ?>
                 </div>
             <?php endif; ?>
 

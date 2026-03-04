@@ -52,7 +52,9 @@ include __DIR__ . '/../../includes/header.php';
                             <td class="px-6 py-4">
                                 <div class="flex gap-3 items-center">
                                     <a href="/pages/admin/edit_user.php?id=<?= $u['id'] ?>"
-                                       class="text-gold hover:text-gold-light transition">✏️ Éditer</a>
+                                       class="text-gold hover:text-gold-light transition flex items-center gap-1">
+                                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                        Editer</a>
                                     <?php if ($u['id'] !== $_SESSION['user']['id']): ?>
                                         <form action="/pages/admin/delete_user.php" method="POST" class="inline"
                                               onsubmit="return confirm('Supprimer <?= e($u['username']) ?> ?')">
@@ -60,7 +62,7 @@ include __DIR__ . '/../../includes/header.php';
                                             <input type="hidden" name="id" value="<?= $u['id'] ?>">
                                             <button type="submit"
                                                     class="text-red-400 hover:text-red-300 transition cursor-pointer">
-                                                🗑️
+                                                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
                                             </button>
                                         </form>
                                     <?php endif; ?>

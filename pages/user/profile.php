@@ -4,7 +4,7 @@ require_once __DIR__ . '/../../includes/auth.php';
 secureSessionStart();
 requireLogin();
 
-$pageTitle = 'Mon Profil — OAPDN';
+$pageTitle = 'Mon Profil — TFT Collection';
 $db = getDB();
 $userId = $_SESSION['user']['id'];
 
@@ -56,8 +56,9 @@ include __DIR__ . '/../../includes/header.php';
                             le <?= date('d/m/Y', strtotime($user['created_at'])) ?></p>
                     </div>
                     <a href="/pages/user/edit_profile.php"
-                       class="bg-linear-to-br from-gold to-gold-dark text-[#2a1a24] font-tft font-bold px-5 py-2 rounded-lg text-sm hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all">
-                        ✏️ Modifier le profil
+                       class="bg-linear-to-br from-gold to-gold-dark text-[#2a1a24] font-tft font-bold px-5 py-2 rounded-lg text-sm hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all flex items-center gap-1.5">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                        Modifier le profil
                     </a>
                 </div>
             </div>
@@ -119,8 +120,8 @@ include __DIR__ . '/../../includes/header.php';
                                 <img src="<?= e($ug['image']) ?>" alt="<?= e($ug['name']) ?>"
                                      class="w-12 h-12 rounded-lg object-cover shrink-0">
                             <?php else: ?>
-                                <div class="w-12 h-12 rounded-lg bg-tft-dark flex items-center justify-center text-2xl shrink-0">
-                                    🎮
+                                <div class="w-12 h-12 rounded-lg bg-tft-dark flex items-center justify-center shrink-0">
+                                    <svg class="w-6 h-6 text-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                 </div>
                             <?php endif; ?>
                             <div class="flex-1 min-w-0">
@@ -141,12 +142,13 @@ include __DIR__ . '/../../includes/header.php';
         <!-- Actions -->
         <div class="flex flex-wrap gap-4 justify-center">
             <a href="/pages/user/edit_profile.php"
-               class="border border-gold text-gold px-6 py-2.5 rounded-lg hover:bg-gold hover:text-tft-dark transition font-medium text-sm">
-                ✏️ Modifier le profil
+               class="border border-gold text-gold px-6 py-2.5 rounded-lg hover:bg-gold hover:text-tft-dark transition font-medium text-sm flex items-center gap-1.5">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                Modifier le profil
             </a>
             <a href="/pages/games/index.php"
                class="border border-tft-border text-gray-400 px-6 py-2.5 rounded-lg hover:border-gold hover:text-gold transition font-medium text-sm">
-                🎮 Catalogue
+                Catalogue
             </a>
             <a href="/pages/auth/logout.php"
                class="border border-red-500/50 text-red-400 px-6 py-2.5 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition font-medium text-sm">
@@ -166,7 +168,7 @@ include __DIR__ . '/../../includes/header.php';
                 </p>
                 <button onclick="document.getElementById('delete-modal').classList.remove('hidden')"
                         class="border border-red-500/50 text-red-400 px-6 py-2.5 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition font-medium text-sm cursor-pointer">
-                    🗑️ Supprimer mon compte
+                    Supprimer mon compte
                 </button>
             </div>
         </div>
@@ -179,6 +181,7 @@ include __DIR__ . '/../../includes/header.php';
                     Cette action est irréversible. Entrez votre mot de passe pour confirmer la suppression.
                 </p>
                 <form action="/pages/user/delete_account.php" method="POST" class="space-y-4">
+                    <?= csrfField() ?>
                     <div>
                         <label for="delete-password" class="block text-sm font-medium text-gold-light mb-1">Mot de passe</label>
                         <input type="password" id="delete-password" name="password" required placeholder="••••••••"
@@ -187,7 +190,7 @@ include __DIR__ . '/../../includes/header.php';
                     <div class="flex gap-3 pt-2">
                         <button type="submit"
                                 class="flex-1 bg-red-600 hover:bg-red-700 text-white font-tft font-bold py-3 rounded-lg transition-all cursor-pointer">
-                            🗑️ Confirmer la suppression
+                            Confirmer la suppression
                         </button>
                         <button type="button" onclick="document.getElementById('delete-modal').classList.add('hidden')"
                                 class="px-6 py-3 border border-tft-border text-gray-400 rounded-lg hover:border-gold hover:text-gold transition text-sm cursor-pointer">

@@ -82,7 +82,7 @@ include __DIR__ . '/../../includes/header.php';
                 <p class="text-gray-500 mb-6">Parcourez le catalogue et ajoutez des jeux !</p>
                 <a href="/pages/games/index.php"
                    class="inline-block bg-linear-to-br from-gold to-gold-dark text-tft-dark font-tft font-bold px-6 py-3 rounded-lg hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all">
-                    🎮 Voir le catalogue
+                    Voir le catalogue
                 </a>
             </div>
         <?php else: ?>
@@ -116,7 +116,8 @@ include __DIR__ . '/../../includes/header.php';
                                     <img src="<?= e($ug['image']) ?>" alt="<?= e($ug['name']) ?>"
                                          class="w-full h-full object-cover opacity-80">
                                 <?php else: ?>
-                                    <div class="w-full h-full bg-tft-dark flex items-center justify-center text-5xl">🎮
+                                    <div class="w-full h-full bg-tft-dark flex items-center justify-center">
+                                        <svg class="w-10 h-10 text-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
                                     </div>
                                 <?php endif; ?>
                             </div>
@@ -135,16 +136,18 @@ include __DIR__ . '/../../includes/header.php';
                                             <p class="text-gray-500 text-xs">de jeu</p>
                                         </div>
                                         <a href="/pages/user/edit_collection_game.php?game_id=<?= $ug['id'] ?>"
-                                           class="border border-gold/50 text-gold px-3 py-1.5 rounded-lg hover:bg-gold/10 transition text-xs">
-                                            ✏️ Stats
+                                           class="border border-gold/50 text-gold px-3 py-1.5 rounded-lg hover:bg-gold/10 transition text-xs flex items-center gap-1">
+                                            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg>
+                                            Stats
                                         </a>
                                         <form action="/pages/games/remove_from_collection.php" method="POST" class="inline"
                                               onsubmit="return confirm('Retirer ce jeu de votre collection ?')">
                                             <?= csrfField() ?>
                                             <input type="hidden" name="id" value="<?= $ug['id'] ?>">
                                             <button type="submit"
-                                                    class="border border-red-500/50 text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/20 transition text-xs cursor-pointer">
-                                                🗑️ Retirer
+                                                    class="border border-red-500/50 text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/20 transition text-xs cursor-pointer flex items-center gap-1">
+                                                <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/></svg>
+                                                Retirer
                                             </button>
                                         </form>
                                     </div>
@@ -225,7 +228,7 @@ include __DIR__ . '/../../includes/header.php';
                                         <div class="flex items-start gap-3 p-3 rounded-lg border
                                     <?= $unlocked ? $r['border'] . ' ' . $r['bg'] : 'border-tft-border bg-tft-dark/50 opacity-60' ?>">
                                             <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 <?= $unlocked ? $r['bg'] . ' ' . $r['color'] : 'bg-gray-700/50 text-gray-600' ?>">
-                                                <?= $unlocked ? '🏆' : '🔒' ?>
+                                                <?= $unlocked ? '<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>' : '<svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"/></svg>' ?>
                                             </div>
                                             <div class="flex-1 min-w-0">
                                                 <div class="flex items-center gap-2 flex-wrap">

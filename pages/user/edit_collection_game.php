@@ -109,7 +109,9 @@ include __DIR__ . '/../../includes/header.php';
             <img src="<?= e($userGame['image']) ?>" alt="<?= e($userGame['name']) ?>"
                  class="w-16 h-16 rounded-xl object-cover border border-tft-border">
         <?php else: ?>
-            <div class="w-16 h-16 rounded-xl bg-tft-dark flex items-center justify-center text-3xl border border-tft-border">🎮</div>
+            <div class="w-16 h-16 rounded-xl bg-tft-dark flex items-center justify-center border border-tft-border">
+                <svg class="w-8 h-8 text-gold/30" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+            </div>
         <?php endif; ?>
         <div>
             <h1 class="font-tft text-3xl font-bold text-gold"><?= e($userGame['name']) ?></h1>
@@ -119,7 +121,7 @@ include __DIR__ . '/../../includes/header.php';
 
     <?php if (!empty($errors)): ?>
         <div class="bg-red-500/10 border border-red-500/30 rounded-lg px-4 py-3 mb-6 text-red-400 text-sm space-y-1">
-            <?php foreach ($errors as $err): ?><p>⚠ <?= e($err) ?></p><?php endforeach; ?>
+            <?php foreach ($errors as $err): ?><p><?= e($err) ?></p><?php endforeach; ?>
         </div>
     <?php endif; ?>
 
@@ -128,7 +130,7 @@ include __DIR__ . '/../../includes/header.php';
 
         <!-- Temps de jeu -->
         <div class="bg-linear-to-br from-tft-card to-tft-card-deep border border-tft-border rounded-xl p-6">
-            <h2 class="font-tft text-xl font-bold text-gold mb-4">⏱️ Temps de jeu</h2>
+            <h2 class="font-tft text-xl font-bold text-gold mb-4">Temps de jeu</h2>
             <div>
                 <label for="playtime_hours" class="block text-sm font-medium text-gold-light mb-2">Heures de jeu</label>
                 <div class="flex items-center gap-3">
@@ -144,7 +146,7 @@ include __DIR__ . '/../../includes/header.php';
         <?php if (!empty($achievements)): ?>
             <div class="bg-linear-to-br from-tft-card to-tft-card-deep border border-tft-border rounded-xl p-6">
                 <div class="flex items-center justify-between mb-4">
-                    <h2 class="font-tft text-xl font-bold text-gold">🏆 Succès</h2>
+                    <h2 class="font-tft text-xl font-bold text-gold">Succes</h2>
                     <div class="flex gap-2">
                         <button type="button" onclick="document.querySelectorAll('.ach-checkbox').forEach(c => c.checked = true)"
                                 class="text-xs text-gold border border-gold/30 px-3 py-1 rounded-lg hover:bg-gold/10 transition cursor-pointer">
@@ -171,7 +173,7 @@ include __DIR__ . '/../../includes/header.php';
                                    class="ach-checkbox w-5 h-5 rounded accent-[#FE895E] cursor-pointer"
                                 <?= $isUnlocked ? 'checked' : '' ?>>
                             <div class="w-8 h-8 rounded-lg flex items-center justify-center shrink-0 <?= $r['bg'] ?> <?= $r['color'] ?>">
-                                🏆
+                                <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
                             </div>
                             <div class="flex-1 min-w-0">
                                 <div class="flex items-center gap-2 flex-wrap">
@@ -192,7 +194,7 @@ include __DIR__ . '/../../includes/header.php';
         <div class="flex gap-4">
             <button type="submit"
                     class="flex-1 bg-linear-to-br from-gold to-gold-dark text-tft-dark font-tft font-bold py-3 rounded-lg text-lg hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all cursor-pointer">
-                💾 Enregistrer
+                Enregistrer
             </button>
             <a href="/pages/user/collection.php"
                class="px-6 py-3 border border-tft-border text-gray-400 rounded-lg hover:border-gold hover:text-gold transition text-sm flex items-center">
