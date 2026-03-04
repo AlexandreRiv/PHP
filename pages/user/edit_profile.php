@@ -111,6 +111,46 @@ include __DIR__ . '/../../includes/header.php';
                 </a>
             </div>
         </form>
+
+        <!-- Suppression du compte -->
+        <div class="mt-10 border-t border-red-500/30 pt-8">
+            <h2 class="font-tft text-xl font-bold text-red-400 mb-2">Zone dangereuse</h2>
+            <p class="text-gray-500 text-sm mb-4">
+                La suppression de votre compte est <strong class="text-red-400">irréversible</strong>.
+                Toutes vos données seront définitivement perdues.
+            </p>
+            <button onclick="document.getElementById('delete-modal').classList.remove('hidden')"
+                    class="border border-red-500/50 text-red-400 px-5 py-2.5 rounded-lg hover:bg-red-500/20 hover:text-red-300 transition font-medium text-sm cursor-pointer">
+                🗑️ Supprimer mon compte
+            </button>
+        </div>
+    </div>
+
+    <!-- Modal de confirmation -->
+    <div id="delete-modal" class="hidden fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-sm">
+        <div class="bg-tft-card border border-red-500/30 rounded-2xl p-8 max-w-md w-full mx-4 shadow-2xl">
+            <h3 class="font-tft text-2xl font-bold text-red-400 mb-2">Supprimer votre compte ?</h3>
+            <p class="text-gray-400 text-sm mb-6">
+                Cette action est irréversible. Entrez votre mot de passe pour confirmer la suppression.
+            </p>
+            <form action="/pages/user/delete_account.php" method="POST" class="space-y-4">
+                <div>
+                    <label for="delete-password" class="block text-sm font-medium text-gold-light mb-1">Mot de passe</label>
+                    <input type="password" id="delete-password" name="password" required placeholder="••••••••"
+                           class="w-full bg-tft-card-deep border border-red-500/30 rounded-lg px-4 py-3 text-gray-200 focus:border-red-500 outline-none transition-all">
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button type="submit"
+                            class="flex-1 bg-red-600 hover:bg-red-700 text-white font-tft font-bold py-3 rounded-lg transition-all cursor-pointer">
+                        🗑️ Confirmer la suppression
+                    </button>
+                    <button type="button" onclick="document.getElementById('delete-modal').classList.add('hidden')"
+                            class="px-6 py-3 border border-tft-border text-gray-400 rounded-lg hover:border-gold hover:text-gold transition text-sm cursor-pointer">
+                        Annuler
+                    </button>
+                </div>
+            </form>
+        </div>
     </div>
 
 <?php include __DIR__ . '/../../includes/footer.php'; ?>
