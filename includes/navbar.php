@@ -45,7 +45,7 @@ require_once __DIR__ . '/../includes/auth.php';
                     Connexion
                 </a>
                 <a href="/pages/auth/register.php"
-                   class="bg-linear-to-br from-gold to-gold-dark text-[#2a1a24] font-tft font-bold tracking-wide px-4 py-1.5 rounded-lg text-sm hover:from-gold-light hover:to-gold hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all">
+                   class="bg-linear-to-br from-gold to-gold-dark text-[#2a1a24] font-medium px-4 py-1.5 rounded-lg text-sm hover:from-gold-light hover:to-gold hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all">
                     Inscription
                 </a>
             <?php endif; ?>
