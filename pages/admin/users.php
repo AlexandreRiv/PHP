@@ -40,18 +40,6 @@ include __DIR__ . '/../../includes/header.php';
                     <?php foreach ($users as $u): ?>
                         <tr class="hover:bg-tft-dark/30 transition">
                             <td class="px-6 py-4 text-gray-500"><?= $u['id'] ?></td>
-                            <td class="px-6 py-4">
-                                <div class="flex items-center gap-3">
-                                    <span class="text-xl">
-                                        <?= match ($u['gender']) {
-                                            'female' => '👩',
-                                            'other' => '🧑',
-                                            default => '👨'
-                                        } ?>
-                                    </span>
-                                    <span class="font-medium text-gray-200"><?= e($u['username']) ?></span>
-                                </div>
-                            </td>
                             <td class="px-6 py-4 text-gray-400"><?= e($u['email']) ?></td>
                             <td class="px-6 py-4">
                                 <?php if ($u['role'] === 'admin'): ?>

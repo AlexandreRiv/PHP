@@ -44,7 +44,6 @@ function loginUser(array $user): void {
         'username'   => $user['username'],
         'email'      => $user['email'],
         'role'       => $user['role'],
-        'gender'     => $user['gender'],
         'created_at' => $user['created_at'],
     ];
 }

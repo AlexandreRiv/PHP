@@ -42,13 +42,6 @@ include __DIR__ . '/../../includes/header.php';
             <div class="h-36 bg-linear-to-r from-gold/20 via-tft-nav-mid to-gold-dark/20"></div>
             <div class="px-6 pb-8 -mt-16 relative z-10">
                 <div class="flex flex-col sm:flex-row items-center sm:items-end gap-5">
-                    <div class="w-28 h-28 rounded-full border-4 border-tft-card-deep bg-linear-to-br from-gold to-gold-dark flex items-center justify-center text-5xl shadow-[0_0_30px_rgba(254,137,94,0.3)]">
-                        <?= match ($user['gender']) {
-                            'female' => '👩‍💻',
-                            'other' => '🧑‍💻',
-                            default => '👨‍💻'
-                        } ?>
-                    </div>
                     <div class="text-center sm:text-left flex-1">
                         <div class="flex flex-col sm:flex-row items-center gap-3">
                             <h1 class="font-tft text-3xl font-bold text-gold"><?= e($user['username']) ?></h1>
@@ -99,16 +92,6 @@ include __DIR__ . '/../../includes/header.php';
                 <div class="flex flex-col sm:flex-row sm:items-center px-6 py-4 gap-2">
                     <span class="text-gray-500 text-sm sm:w-48 shrink-0">Adresse e-mail</span>
                     <span class="text-gray-200 font-medium"><?= e($user['email']) ?></span>
-                </div>
-                <div class="flex flex-col sm:flex-row sm:items-center px-6 py-4 gap-2">
-                    <span class="text-gray-500 text-sm sm:w-48 shrink-0">Genre</span>
-                    <span class="text-gray-200 font-medium">
-                    <?= match ($user['gender']) {
-                        'male' => '👨 Homme',
-                        'female' => '👩 Femme',
-                        default => '🧑 Autre'
-                    } ?>
-                </span>
                 </div>
                 <div class="flex flex-col sm:flex-row sm:items-center px-6 py-4 gap-2">
                     <span class="text-gray-500 text-sm sm:w-48 shrink-0">Rôle</span>

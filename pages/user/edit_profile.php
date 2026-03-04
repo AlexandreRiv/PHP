@@ -19,7 +19,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old = [
             'username' => trim($_POST['username'] ?? ''),
             'email' => trim($_POST['email'] ?? ''),
-            'gender' => $_POST['gender'] ?? '',
     ];
     $newPassword = $_POST['new_password'] ?? '';
     $newPassword2 = $_POST['new_password2'] ?? '';
@@ -28,8 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['username'] = 'Le pseudo doit faire au moins 3 caractères.';
     if (!filter_var($old['email'], FILTER_VALIDATE_EMAIL))
         $errors['email'] = 'Adresse e-mail invalide.';
-    if (!in_array($old['gender'], ['male', 'female', 'other']))
-        $errors['gender'] = 'Genre invalide.';
 
     if (empty($errors['email'])) {
         $check = $db->prepare('SELECT id FROM user WHERE email = ? AND id != ?');
@@ -47,15 +44,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (empty($errors)) {
         if (!empty($newPassword)) {
             $hash = password_hash($newPassword, PASSWORD_BCRYPT);
-            $stmt = $db->prepare('UPDATE user SET username=?, email=?, gender=?, password_hash=? WHERE id=?');
-            $stmt->execute([$old['username'], $old['email'], $old['gender'], $hash, $userId]);
+            $stmt = $db->prepare('UPDATE user SET username=?, email=?,  password_hash=? WHERE id=?');
+            $stmt->execute([$old['username'], $old['email'], $hash, $userId]);
         } else {
-            $stmt = $db->prepare('UPDATE user SET username=?, email=?, gender=? WHERE id=?');
-            $stmt->execute([$old['username'], $old['email'], $old['gender'], $userId]);
+            $stmt = $db->prepare('UPDATE user SET username=?, email=? WHERE id=?');
+            $stmt->execute([$old['username'], $old['email'], $userId]);
         }
         $_SESSION['user']['username'] = $old['username'];
         $_SESSION['user']['email'] = $old['email'];
-        $_SESSION['user']['gender'] = $old['gender'];
         setFlash('Profil mis à jour !', 'success');
         redirect('/pages/user/profile.php');
     }
@@ -84,15 +80,6 @@ include __DIR__ . '/../../includes/header.php';
                 <label for="email" class="block text-sm font-medium text-gold-light mb-1">Adresse e-mail</label>
                 <input type="email" id="email" name="email" required value="<?= e($old['email']) ?>"
                        class="w-full bg-tft-card-deep border <?= isset($errors['email']) ? 'border-red-500' : 'border-tft-border' ?> rounded-lg px-4 py-3 text-gray-200 focus:border-gold outline-none transition-all">
-            </div>
-            <div>
-                <label for="gender" class="block text-sm font-medium text-gold-light mb-1">Genre</label>
-                <select id="gender" name="gender"
-                        class="w-full bg-tft-card-deep border border-tft-border rounded-lg px-4 py-3 text-gray-200 focus:border-gold outline-none transition-all">
-                    <option value="male" <?= $old['gender'] === 'male' ? 'selected' : '' ?>>Homme</option>
-                    <option value="female" <?= $old['gender'] === 'female' ? 'selected' : '' ?>>Femme</option>
-                    <option value="other" <?= $old['gender'] === 'other' ? 'selected' : '' ?>>Autre</option>
-                </select>
             </div>
 
             <div class="border-t border-tft-border pt-5">

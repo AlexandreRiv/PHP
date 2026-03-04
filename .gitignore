@@ -1,4 +1,4 @@
-x.idea
+.idea
 .vscode
 *.swp
 *.swo
@@ -20,4 +20,3 @@ x.idea
 Thumbs.db
 
 database/database.sqlite
-database/seed.php

@@ -76,13 +76,6 @@ include __DIR__ . '/../../includes/header.php';
             <div class="divide-y divide-tft-border">
                 <?php foreach ($recentUsers as $u): ?>
                     <div class="flex items-center gap-4 px-6 py-4">
-                        <div class="w-10 h-10 rounded-full bg-linear-to-br from-gold to-gold-dark flex items-center justify-center text-xl shrink-0">
-                            <?= match ($u['gender']) {
-                                'female' => '👩',
-                                'other' => '🧑',
-                                default => '👨'
-                            } ?>
-                        </div>
                         <div class="flex-1 min-w-0">
                             <p class="font-medium text-gray-200 truncate"><?= e($u['username']) ?></p>
                             <p class="text-xs text-gray-500"><?= e($u['email']) ?></p>

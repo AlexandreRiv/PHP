@@ -13,7 +13,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old = [
             'username' => trim($_POST['username'] ?? ''),
             'email' => trim($_POST['email'] ?? ''),
-            'gender' => $_POST['gender'] ?? '',
     ];
     $password = $_POST['password'] ?? '';
     $password2 = $_POST['password2'] ?? '';
@@ -30,9 +29,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($password !== $password2) {
         $errors['password2'] = 'Les mots de passe ne correspondent pas.';
     }
-    if (!in_array($old['gender'], ['male', 'female', 'other'])) {
-        $errors['gender'] = 'Veuillez choisir un genre.';
-    }
 
     if (empty($errors)) {
         $db = getDB();
@@ -47,10 +43,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $db = getDB();
         $hash = password_hash($password, PASSWORD_BCRYPT);
         $stmt = $db->prepare('
-            INSERT INTO user (username, email, password_hash, role, gender)
+            INSERT INTO user (username, email, password_hash, role)
             VALUES (?, ?, ?, \'user\', ?)
         ');
-        $stmt->execute([$old['username'], $old['email'], $hash, $old['gender']]);
+        $stmt->execute([$old['username'], $old['email'], $hash]);
 
         $newUser = $db->prepare('SELECT * FROM user WHERE id = ?');
         $newUser->execute([$db->lastInsertId()]);
@@ -105,17 +101,6 @@ include __DIR__ . '/../../includes/header.php';
                     <input type="password" id="password2" name="password2" required
                            placeholder="••••••••"
                            class="w-full bg-tft-card-deep border <?= isset($errors['password2']) ? 'border-red-500' : 'border-tft-border' ?> rounded-lg px-4 py-3 text-gray-200 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition-all">
-                </div>
-                <div>
-                    <label for="gender" class="block text-sm font-medium text-gold-light mb-1">Genre</label>
-                    <select id="gender" name="gender" required
-                            class="w-full bg-tft-card-deep border <?= isset($errors['gender']) ? 'border-red-500' : 'border-tft-border' ?> rounded-lg px-4 py-3 text-gray-200 focus:border-gold focus:ring-2 focus:ring-gold/20 outline-none transition-all">
-                        <option value="">-- Choisir --</option>
-                        <option value="male" <?= ($old['gender'] ?? '') === 'male' ? 'selected' : '' ?>>Homme</option>
-                        <option value="female" <?= ($old['gender'] ?? '') === 'female' ? 'selected' : '' ?>>Femme
-                        </option>
-                        <option value="other" <?= ($old['gender'] ?? '') === 'other' ? 'selected' : '' ?>>Autre</option>
-                    </select>
                 </div>
                 <button type="submit"
                         class="w-full bg-linear-to-br from-gold to-gold-dark text-tft-dark font-tft font-bold tracking-wide py-3 rounded-lg text-lg hover:from-gold-light hover:to-gold hover:shadow-[0_0_20px_rgba(240,178,50,0.5)] transition-all">

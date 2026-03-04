@@ -22,7 +22,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'username' => trim($_POST['username'] ?? ''),
         'email' => trim($_POST['email'] ?? ''),
         'role' => $_POST['role'] ?? 'user',
-        'gender' => $_POST['gender'] ?? 'other',
     ];
 
     if (mb_strlen($old['username']) < 3)
@@ -39,8 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
-        $stmt = $db->prepare('UPDATE user SET username=?, email=?, role=?, gender=? WHERE id=?');
-        $stmt->execute([$old['username'], $old['email'], $old['role'], $old['gender'], $id]);
+        $stmt = $db->prepare('UPDATE user SET username=?, email=?, role=? WHERE id=?');
+        $stmt->execute([$old['username'], $old['email'], $old['role'], $id]);
         setFlash('Utilisateur mis à jour !', 'success');
         redirect('/pages/admin/users.php');
     }
@@ -72,15 +71,6 @@ include __DIR__ . '/../../includes/header.php';
                 <label for="email" class="block text-sm font-medium text-gold-light mb-1">Email</label>
                 <input type="email" id="email" name="email" required value="<?= e($old['email']) ?>"
                        class="w-full bg-tft-card-deep border <?= isset($errors['email']) ? 'border-red-500' : 'border-tft-border' ?> rounded-lg px-4 py-3 text-gray-200 focus:border-gold outline-none transition-all">
-            </div>
-            <div>
-                <label for="gender" class="block text-sm font-medium text-gold-light mb-1">Genre</label>
-                <select id="gender" name="gender"
-                        class="w-full bg-tft-card-deep border border-tft-border rounded-lg px-4 py-3 text-gray-200 focus:border-gold outline-none transition-all">
-                    <option value="male" <?= $old['gender'] === 'male' ? 'selected' : '' ?>>Homme</option>
-                    <option value="female" <?= $old['gender'] === 'female' ? 'selected' : '' ?>>Femme</option>
-                    <option value="other" <?= $old['gender'] === 'other' ? 'selected' : '' ?>>Autre</option>
-                </select>
             </div>
             <div>
                 <label for="role" class="block text-sm font-medium text-gold-light mb-1">Rôle</label>
