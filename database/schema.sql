@@ -24,7 +24,6 @@ CREATE TABLE IF NOT EXISTS user_games (
                                           game_id INTEGER NOT NULL,
                                           added_at TEXT NOT NULL DEFAULT (datetime('now')),
                                           playtime_hours INTEGER NOT NULL DEFAULT 0,
-                                          death_date TEXT,
                                           FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
                                           FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
 );

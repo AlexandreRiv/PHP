@@ -9,7 +9,7 @@ $db = getDB();
 $userId = $_SESSION['user']['id'];
 
 $stmtGames = $db->prepare('
-    SELECT g.*, ug.id as ug_id, ug.playtime_hours, ug.added_at, ug.death_date
+    SELECT g.*, ug.id as ug_id, ug.playtime_hours, ug.added_at
     FROM user_games ug
     JOIN games g ON g.id = ug.game_id
     WHERE ug.user_id = ?
@@ -146,11 +146,6 @@ include __DIR__ . '/../../includes/header.php';
                                     </div>
                                 </div>
 
-                                <?php if ($ug['death_date']): ?>
-                                    <p class="text-xs text-red-400 mb-3">
-                                        💀 Dernière mort : <?= date('d/m/Y', strtotime($ug['death_date'])) ?>
-                                    </p>
-                                <?php endif; ?>
 
                                 <!-- Progression -->
                                 <div class="flex items-center gap-3">

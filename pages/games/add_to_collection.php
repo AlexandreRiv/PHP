@@ -29,15 +29,14 @@ if ($check->fetch()) {
 }
 
 $stmt = $db->prepare('
-    INSERT INTO user_games (user_id, game_id, playtime_hours, added_at, death_date)
-    VALUES (?, ?, ?, ?, ?)
+    INSERT INTO user_games (user_id, game_id, playtime_hours, added_at)
+    VALUES (?, ?, ?, ?)
 ');
 $stmt->execute([
     $userId,
     $gameId,
     randomPlaytime(),
     date('Y-m-d H:i:s'),
-    randomDeathDate(),
 ]);
 
 setFlash('"' . e($game['name']) . '" ajouté à votre collection !', 'success');

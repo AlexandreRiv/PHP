@@ -77,10 +77,6 @@ function randomPlaytime(): int {
     return random_int(1, 500);
 }
 
-function randomDeathDate(): string {
-    $timestamp = random_int(strtotime('-2 years'), time());
-    return date('Y-m-d H:i:s', $timestamp);
-}
 
 function rarityConfig(string $rarity): array {
     return match($rarity) {

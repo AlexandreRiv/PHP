@@ -222,7 +222,7 @@ foreach ($levels as $gameName => $list) {
 // ATTRIBUTION ALÉATOIRE
 // ════════════════════════════════════════════════════════════════
 
-$stmtUG = $db->prepare('INSERT OR IGNORE INTO user_games (user_id, game_id, playtime_hours, added_at, death_date) VALUES (?, ?, ?, ?, ?)');
+$stmtUG = $db->prepare('INSERT OR IGNORE INTO user_games (user_id, game_id, playtime_hours, added_at) VALUES (?, ?, ?, ?)');
 $stmtUA = $db->prepare('INSERT OR IGNORE INTO user_achievements (user_id, achievement_id, unlocked_at) VALUES (?, ?, ?)');
 
 foreach ($userIds as $username => $uid) {
@@ -234,8 +234,7 @@ foreach ($userIds as $username => $uid) {
     foreach ($selectedGames as $gameName) {
         $gid      = $gameIds[$gameName];
         $addedAt  = date('Y-m-d H:i:s', rand(strtotime('-2 years'), time()));
-        $deathDate = date('Y-m-d H:i:s', rand(strtotime('-1 year'), time()));
-        $stmtUG->execute([$uid, $gid, rand(1, 500), $addedAt, $deathDate]);
+        $stmtUG->execute([$uid, $gid, rand(1, 500), $addedAt]);
 
         if (!empty($achIds[$gameName])) {
             $toUnlock = array_rand($achIds[$gameName], rand(1, count($achIds[$gameName])));

@@ -17,7 +17,7 @@ if (!$user) {
 }
 
 $stmtGames = $db->prepare('
-    SELECT g.*, ug.playtime_hours, ug.added_at, ug.death_date
+    SELECT g.*, ug.playtime_hours, ug.added_at
     FROM user_games ug
     JOIN games g ON g.id = ug.game_id
     WHERE ug.user_id = ?
@@ -132,12 +132,6 @@ include __DIR__ . '/../../includes/header.php';
                                 <p class="font-tft font-bold text-gold"><?= $ug['playtime_hours'] ?>h</p>
                                 <p class="text-xs text-gray-500">de jeu</p>
                             </div>
-                            <?php if ($ug['death_date']): ?>
-                                <div class="text-right shrink-0">
-                                    <p class="text-xs text-red-400">
-                                        💀 <?= date('d/m/Y', strtotime($ug['death_date'])) ?></p>
-                                </div>
-                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
                 </div>

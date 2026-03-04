@@ -15,9 +15,26 @@ function isAdmin(): bool {
 }
 
 /**
+ * Vérifie que l'utilisateur stocké en session existe toujours en base.
+ * Si ce n'est pas le cas (ex : base recréée), on le déconnecte.
+ */
+function validateSession(): void {
+    if (!isLoggedIn()) return;
+
+    $db = getDB();
+    $stmt = $db->prepare('SELECT id FROM user WHERE id = ?');
+    $stmt->execute([$_SESSION['user']['id']]);
+    if (!$stmt->fetch()) {
+        logoutUser();
+        secureSessionStart();
+    }
+}
+
+/**
  * Redirige vers la page de connexion si l'utilisateur n'est pas connecté.
  */
 function requireLogin(): void {
+    validateSession();
     if (!isLoggedIn()) {
         header('Location: /pages/auth/login.php');
         exit;
