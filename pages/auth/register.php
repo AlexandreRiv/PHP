@@ -18,13 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = $_POST['password'] ?? '';
     $password2 = $_POST['password2'] ?? '';
 
-    if (empty($old['username']) || mb_strlen($old['username']) < 3) {
+    if (empty($old['username']) || strlen($old['username']) < 3) {
         $errors['username'] = 'Le pseudo doit faire au moins 3 caractères.';
     }
     if (!filter_var($old['email'], FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'Adresse e-mail invalide.';
     }
-    if (mb_strlen($password) < 6) {
+    if (strlen($password) < 6) {
         $errors['password'] = 'Le mot de passe doit faire au moins 6 caractères.';
     }
     if ($password !== $password2) {

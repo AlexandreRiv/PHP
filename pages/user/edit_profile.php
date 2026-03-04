@@ -24,7 +24,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $newPassword = $_POST['new_password'] ?? '';
     $newPassword2 = $_POST['new_password2'] ?? '';
 
-    if (mb_strlen($old['username']) < 3)
+    if (strlen($old['username']) < 3)
         $errors['username'] = 'Le pseudo doit faire au moins 3 caractères.';
     if (!filter_var($old['email'], FILTER_VALIDATE_EMAIL))
         $errors['email'] = 'Adresse e-mail invalide.';
@@ -38,7 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (!empty($newPassword)) {
-        if (mb_strlen($newPassword) < 6)
+        if (strlen($newPassword) < 6)
             $errors['new_password'] = 'Le mot de passe doit faire au moins 6 caractères.';
         elseif ($newPassword !== $newPassword2)
             $errors['new_password2'] = 'Les mots de passe ne correspondent pas.';
