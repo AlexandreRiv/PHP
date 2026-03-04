@@ -1,0 +1,25 @@
+.idea
+.vscode
+*.swp
+*.swo
+
+# Dépendances
+/vendor/
+
+# Environnement
+.env
+
+# Logs
+*.log
+
+# Cache
+/cache/
+
+# Système
+.DS_Store
+Thumbs.db
+
+database/database.sqlite
+
+# Scripts utilitaires temporaires
+migrate_price.php

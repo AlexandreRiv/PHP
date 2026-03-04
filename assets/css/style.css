@@ -1,0 +1,196 @@
+/* ══════════════════════════════════════
+   Carrousel Circulaire
+   ══════════════════════════════════════ */
+
+/* ── Scène 3D ── */
+.carousel-scene {
+    perspective: 1200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 20px 0 40px;
+    user-select: none;
+}
+
+/* ── Arène (conteneur du ring) ── */
+.carousel-arena {
+    width: 100%;
+    max-width: 900px;
+    height: 420px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    perspective: 1200px;
+}
+
+/* ── Ring rotatif ── */
+.carousel-ring {
+    width: 200px;
+    height: 280px;
+    position: relative;
+    transform-style: preserve-3d;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* ── Chaque item (carte + prix) ── */
+.carousel-item {
+    position: absolute;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    transition: transform 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94), opacity 0.8s ease;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+    cursor: pointer;
+}
+
+.carousel-item.active {
+    cursor: pointer;
+}
+
+/* ── Lien carte ── */
+.carousel-card-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+/* ── Prix au-dessus ── */
+.carousel-price {
+    font-size: 0.85rem;
+    font-weight: 800;
+    padding: 5px 14px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+    background: linear-gradient(135deg, #FE895E, #CD6889);
+    color: #2a1a24;
+    box-shadow: 0 0 15px rgba(254, 137, 94, 0.4);
+    animation: priceFloat 3s ease-in-out infinite;
+    white-space: nowrap;
+}
+
+@keyframes priceFloat {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* ── Carte 3D ── */
+.carousel-card-3d {
+    width: 180px;
+    background: linear-gradient(135deg, #5B374D, #462a3c);
+    border: 1px solid #96527A;
+    border-top: 3px solid #FE895E;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+    transition: all 0.5s ease;
+}
+
+.carousel-item.active .carousel-card-3d {
+    width: 220px;
+    box-shadow:
+        0 0 30px rgba(254, 137, 94, 0.3),
+        0 0 60px rgba(254, 137, 94, 0.1);
+    border-color: #FE895E;
+}
+
+.carousel-item.active .carousel-price {
+    transform: scale(1.15);
+    box-shadow: 0 0 25px rgba(254, 137, 94, 0.5);
+}
+
+.carousel-card-img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    opacity: 0.8;
+    transition: opacity 0.5s;
+}
+
+.carousel-item.active .carousel-card-img {
+    height: 140px;
+    opacity: 1;
+}
+
+.carousel-card-info {
+    padding: 10px;
+    text-align: center;
+}
+
+/* ── Contrôles ── */
+.carousel-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.carousel-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(91, 55, 77, 0.9);
+    border: 1px solid #96527A;
+    color: #FE895E;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.carousel-btn:hover {
+    background: #FE895E;
+    color: #2a1a24;
+    box-shadow: 0 0 20px rgba(254, 137, 94, 0.4);
+}
+
+#carousel-pause {
+    width: auto;
+    border-radius: 22px;
+    padding: 0 18px;
+    font-size: 0.75rem;
+}
+
+/* ── Détail du jeu actif ── */
+.carousel-detail {
+    text-align: center;
+    max-width: 500px;
+    min-height: 100px;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, rgba(91, 55, 77, 0.6), rgba(70, 42, 60, 0.6));
+    border: 1px solid #96527A;
+    border-radius: 16px;
+    backdrop-filter: blur(10px);
+    transition: all 0.5s ease;
+}
+
+/* ── Lueur du plateau ── */
+.carousel-arena::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 40px;
+    background: radial-gradient(ellipse, rgba(254, 137, 94, 0.15), transparent 70%);
+    border-radius: 50%;
+    pointer-events: none;
+}
+
+/* ── Responsive ── */
+@media (max-width: 640px) {
+    .carousel-arena {
+        height: 350px;
+    }
+    .carousel-card-3d {
+        width: 150px;
+    }
+    .carousel-item.active .carousel-card-3d {
+        width: 180px;
+    }
+}
