@@ -11,7 +11,7 @@ $db = getDB();
 $stmt = $db->prepare('SELECT * FROM games WHERE id = ?');
 $stmt->execute([$id]);
 $game = $stmt->fetch();
-if (!$game) redirect('/pages/games/index.php');
+if (!$game) abort(404, 'Ce jeu n\'existe pas.');
 
 $pageTitle = 'Éditer ' . e($game['name']) . ' — Admin';
 $errors = [];
@@ -19,10 +19,10 @@ $old = $game;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $old = [
-        'name' => trim($_POST['name'] ?? ''),
-        'type' => trim($_POST['type'] ?? ''),
-        'description' => trim($_POST['description'] ?? ''),
-        'image' => trim($_POST['image'] ?? ''),
+            'name' => trim($_POST['name'] ?? ''),
+            'type' => trim($_POST['type'] ?? ''),
+            'description' => trim($_POST['description'] ?? ''),
+            'image' => trim($_POST['image'] ?? ''),
     ];
 
     if (empty($old['name'])) $errors['name'] = 'Le nom est obligatoire.';

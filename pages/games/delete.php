@@ -11,7 +11,7 @@ $db = getDB();
 $stmt = $db->prepare('SELECT name FROM games WHERE id = ?');
 $stmt->execute([$id]);
 $game = $stmt->fetch();
-if (!$game) redirect('/pages/games/index.php');
+if (!$game) abort(404, 'Ce jeu n\'existe pas.');
 
 $del = $db->prepare('DELETE FROM games WHERE id = ?');
 $del->execute([$id]);

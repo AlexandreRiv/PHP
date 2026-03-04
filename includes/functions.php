@@ -42,3 +42,22 @@ function rarityConfig(string $rarity): array {
         default     => ['label' => 'Commun',       'color' => 'text-gray-400',   'bg' => 'bg-gray-500/20',   'border' => 'border-gray-500/30'],
     };
 }
+
+/**
+ * Affiche une page d'erreur et arrête l'exécution.
+ */
+function abort(int $code = 404, string $message = 'Page introuvable'): void {
+    http_response_code($code);
+    $pageTitle = $code . ' — OAPDN';
+    include __DIR__ . '/../includes/header.php';
+    echo '
+    <div class="max-w-xl mx-auto px-4 py-32 text-center">
+        <p class="font-tft text-8xl font-bold text-gold mb-4">' . $code . '</p>
+        <p class="text-gray-300 text-xl mb-8">' . e($message) . '</p>
+        <a href="/index.php" class="border border-gold text-gold px-6 py-2.5 rounded-lg hover:bg-gold hover:text-tft-dark transition font-medium text-sm">
+            ← Retour à l\'accueil
+        </a>
+    </div>';
+    include __DIR__ . '/../includes/footer.php';
+    exit;
+}

@@ -10,7 +10,7 @@ $db = getDB();
 $stmt = $db->prepare('SELECT * FROM games WHERE id = ?');
 $stmt->execute([$id]);
 $game = $stmt->fetch();
-if (!$game) redirect('/pages/games/index.php');
+if (!$game) abort(404, 'Ce jeu n\'existe pas.');
 
 $stmtA = $db->prepare('SELECT * FROM achievements WHERE game_id = ? ORDER BY rarity DESC');
 $stmtA->execute([$id]);
