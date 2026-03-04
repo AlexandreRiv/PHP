@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 
 if (isLoggedIn()) redirect('/index.php');
 
@@ -10,6 +10,8 @@ $errors = [];
 $old = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrf();
+
     $old = ['email' => trim($_POST['email'] ?? '')];
     $password = $_POST['password'] ?? '';
 
@@ -28,6 +30,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     if (empty($errors)) {
+        // Re-hash le mot de passe si l'algorithme a évolué
+        if (password_needs_rehash($user['password_hash'], PASSWORD_DEFAULT)) {
+            $newHash = password_hash($password, PASSWORD_DEFAULT);
+            $db->prepare('UPDATE user SET password_hash = ? WHERE id = ?')
+               ->execute([$newHash, $user['id']]);
+        }
+
+        session_regenerate_id(true);
         loginUser($user);
         setFlash('Bienvenue ' . e($user['username']) . ' !', 'success');
         redirect('/pages/user/profile.php');
@@ -56,6 +66,7 @@ include __DIR__ . '/../../includes/header.php';
             <?php endif; ?>
 
             <form action="" method="POST" class="space-y-6">
+                <?= csrfField() ?>
                 <div>
                     <label for="email" class="block text-sm font-medium text-gold-light mb-1">Email</label>
                     <input type="email" id="email" name="email" required

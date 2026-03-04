@@ -11,6 +11,55 @@ function redirect(string $url): void {
     exit;
 }
 
+// ── Protection CSRF ──────────────────────────────────────────
+
+/**
+ * Génère ou retourne le token CSRF stocké en session.
+ */
+function csrfToken(): string {
+    if (empty($_SESSION['csrf_token'])) {
+        $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    }
+    return $_SESSION['csrf_token'];
+}
+
+/**
+ * Retourne un champ hidden contenant le token CSRF (à inclure dans chaque formulaire POST).
+ */
+function csrfField(): string {
+    return '<input type="hidden" name="csrf_token" value="' . e(csrfToken()) . '">';
+}
+
+/**
+ * Vérifie que le token CSRF soumis est valide. Redirige sinon.
+ */
+function verifyCsrf(): void {
+    $token = $_POST['csrf_token'] ?? '';
+    if (!hash_equals(csrfToken(), $token)) {
+        http_response_code(403);
+        die('Session expirée ou requête invalide. Veuillez réessayer.');
+    }
+}
+
+// ── Configuration sécurisée de session ───────────────────────
+
+/**
+ * Démarre la session avec des paramètres de cookie sécurisés.
+ * Appeler cette fonction au lieu de session_start() directement.
+ */
+function secureSessionStart(): void {
+    if (session_status() === PHP_SESSION_ACTIVE) return;
+
+    session_set_cookie_params([
+        'lifetime' => 0,
+        'path'     => '/',
+        'secure'   => (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off'),
+        'httponly'  => true,
+        'samesite'  => 'Strict',
+    ]);
+    session_start();
+}
+
 function setFlash(string $message, string $type = 'info'): void {
     $_SESSION['flash'] = ['message' => $message, 'type' => $type];
 }

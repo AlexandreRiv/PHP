@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 
 $id = (int)($_GET['id'] ?? 0);
 if (!$id) redirect('/pages/games/index.php');
@@ -54,9 +54,15 @@ include __DIR__ . '/../../includes/header.php';
                     <a href="/pages/games/edit.php?id=<?= $game['id'] ?>"
                        class="bg-tft-card/90 border border-tft-border text-gold px-4 py-2 rounded-lg text-sm hover:bg-gold hover:text-tft-dark transition">✏️
                         Éditer</a>
-                    <a href="/pages/games/delete.php?id=<?= $game['id'] ?>"
-                       onclick="return confirm('Supprimer ce jeu ?')"
-                       class="bg-tft-card/90 border border-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm hover:bg-red-500/20 transition">🗑️</a>
+                    <form action="/pages/games/delete.php" method="POST" class="inline"
+                          onsubmit="return confirm('Supprimer ce jeu ?')">
+                        <?= csrfField() ?>
+                        <input type="hidden" name="id" value="<?= $game['id'] ?>">
+                        <button type="submit"
+                                class="bg-tft-card/90 border border-red-500/30 text-red-400 px-4 py-2 rounded-lg text-sm hover:bg-red-500/20 transition cursor-pointer">
+                            🗑️
+                        </button>
+                    </form>
                 </div>
             <?php endif; ?>
         </div>
@@ -159,16 +165,24 @@ include __DIR__ . '/../../includes/header.php';
             ?>
             <div class="mt-6">
                 <?php if ($inCollection): ?>
-                    <a href="/pages/games/remove_from_collection.php?id=<?= $game['id'] ?>"
-                       onclick="return confirm('Retirer ce jeu de votre collection ?')"
-                       class="inline-block border border-red-500/50 text-red-400 px-6 py-2.5 rounded-lg hover:bg-red-500/20 transition font-medium text-sm">
-                        🗑️ Retirer de ma collection
-                    </a>
+                    <form action="/pages/games/remove_from_collection.php" method="POST" class="inline"
+                          onsubmit="return confirm('Retirer ce jeu de votre collection ?')">
+                        <?= csrfField() ?>
+                        <input type="hidden" name="id" value="<?= $game['id'] ?>">
+                        <button type="submit"
+                                class="inline-block border border-red-500/50 text-red-400 px-6 py-2.5 rounded-lg hover:bg-red-500/20 transition font-medium text-sm cursor-pointer">
+                            🗑️ Retirer de ma collection
+                        </button>
+                    </form>
                 <?php else: ?>
-                    <a href="/pages/games/add_to_collection.php?id=<?= $game['id'] ?>"
-                       class="inline-block bg-linear-to-br from-gold to-gold-dark text-tft-dark font-tft font-bold px-6 py-2.5 rounded-lg hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all text-sm">
-                        ➕ Ajouter à ma collection
-                    </a>
+                    <form action="/pages/games/add_to_collection.php" method="POST" class="inline">
+                        <?= csrfField() ?>
+                        <input type="hidden" name="id" value="<?= $game['id'] ?>">
+                        <button type="submit"
+                                class="inline-block bg-linear-to-br from-gold to-gold-dark text-tft-dark font-tft font-bold px-6 py-2.5 rounded-lg hover:shadow-[0_0_20px_rgba(254,137,94,0.5)] transition-all text-sm cursor-pointer">
+                            ➕ Ajouter à ma collection
+                        </button>
+                    </form>
                 <?php endif; ?>
             </div>
         <?php endif; ?>

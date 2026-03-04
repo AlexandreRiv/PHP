@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 requireAdmin();
 
 $id = (int)($_GET['id'] ?? 0);
@@ -18,8 +18,9 @@ $errors = [];
 $old = $game;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrf();
+
     $old = [
-            'name' => trim($_POST['name'] ?? ''),
             'type' => trim($_POST['type'] ?? ''),
             'description' => trim($_POST['description'] ?? ''),
             'image' => trim($_POST['image'] ?? ''),
@@ -52,6 +53,7 @@ include __DIR__ . '/../../includes/header.php';
         <?php endif; ?>
 
         <form action="" method="POST" class="space-y-6">
+            <?= csrfField() ?>
             <div>
                 <label for="name" class="block text-sm font-medium text-gold-light mb-1">Nom du jeu *</label>
                 <input type="text" id="name" name="name" required value="<?= e($old['name']) ?>"

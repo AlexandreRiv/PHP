@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 requireLogin();
 
 $userId = $_SESSION['user']['id'];
@@ -9,6 +9,8 @@ $userId = $_SESSION['user']['id'];
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     redirect('/pages/user/profile.php');
 }
+
+verifyCsrf();
 
 $password = $_POST['password'] ?? '';
 
@@ -26,6 +28,6 @@ $db->exec('PRAGMA foreign_keys = ON');
 $db->prepare('DELETE FROM user WHERE id = ?')->execute([$userId]);
 
 logoutUser();
-session_start();
+secureSessionStart();
 setFlash('Votre compte a été supprimé avec succès.', 'success');
 redirect('/index.php');

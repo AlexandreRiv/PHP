@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 
 if (isLoggedIn()) redirect('/index.php');
 
@@ -10,6 +10,8 @@ $errors = [];
 $old = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrf();
+
     $old = [
             'username' => trim($_POST['username'] ?? ''),
             'email' => trim($_POST['email'] ?? ''),
@@ -41,12 +43,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         $db = getDB();
-        $hash = password_hash($password, PASSWORD_BCRYPT);
+        $hash = password_hash($password, PASSWORD_DEFAULT);
         $stmt = $db->prepare('
             INSERT INTO user (username, email, password_hash, role)
-            VALUES (?, ?, ?, \'user\', ?)
+            VALUES (?, ?, ?, ?)
         ');
-        $stmt->execute([$old['username'], $old['email'], $hash]);
+        $stmt->execute([$old['username'], $old['email'], $hash, 'user']);
 
         $newUser = $db->prepare('SELECT * FROM user WHERE id = ?');
         $newUser->execute([$db->lastInsertId()]);
@@ -74,6 +76,7 @@ include __DIR__ . '/../../includes/header.php';
             <?php endif; ?>
 
             <form action="" method="POST" class="space-y-5">
+                <?= csrfField() ?>
                 <div>
                     <label for="username" class="block text-sm font-medium text-gold-light mb-1">Nom
                         d'invocateur</label>

@@ -1,10 +1,16 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 requireAdmin();
 
-$id = (int)($_GET['id'] ?? 0);
+if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+    redirect('/pages/games/index.php');
+}
+
+verifyCsrf();
+
+$id = (int)($_POST['id'] ?? 0);
 if (!$id) redirect('/pages/games/index.php');
 
 $db = getDB();

@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 requireLogin();
 
 $pageTitle = 'Ma Collection — OAPDN';
@@ -134,11 +134,15 @@ include __DIR__ . '/../../includes/header.php';
                                                 h</p>
                                             <p class="text-gray-500 text-xs">de jeu</p>
                                         </div>
-                                        <a href="/pages/games/remove_from_collection.php?id=<?= $ug['id'] ?>"
-                                           onclick="return confirm('Retirer ce jeu de votre collection ?')"
-                                           class="border border-red-500/50 text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/20 transition text-xs">
-                                            🗑️ Retirer
-                                        </a>
+                                        <form action="/pages/games/remove_from_collection.php" method="POST" class="inline"
+                                              onsubmit="return confirm('Retirer ce jeu de votre collection ?')">
+                                            <?= csrfField() ?>
+                                            <input type="hidden" name="id" value="<?= $ug['id'] ?>">
+                                            <button type="submit"
+                                                    class="border border-red-500/50 text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500/20 transition text-xs cursor-pointer">
+                                                🗑️ Retirer
+                                            </button>
+                                        </form>
                                     </div>
                                 </div>
 

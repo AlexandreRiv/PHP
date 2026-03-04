@@ -61,7 +61,7 @@ foreach ($users as $u) {
     $stmtUser->execute([
         $u['username'],
         $u['email'],
-        password_hash($u['password'], PASSWORD_BCRYPT),
+        password_hash($u['password'], PASSWORD_DEFAULT),
         $u['role'],
     ]);
     $userIds[$u['username']] = $db->lastInsertId();

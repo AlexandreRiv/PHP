@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 
 $pageTitle = 'Catalogue — OAPDN';
 $db = getDB();
@@ -54,12 +54,18 @@ include __DIR__ . '/../../includes/header.php';
                                 <p class="text-xs text-gray-600">Ajouté
                                     le <?= date('d/m/Y', strtotime($game['created_at'])) ?></p>
                                 <?php if (isAdmin()): ?>
-                                    <div class="flex gap-3">
+                                    <div class="flex gap-3 items-center">
                                         <a href="/pages/games/edit.php?id=<?= $game['id'] ?>"
                                            class="text-xs text-gold hover:text-gold-light transition">✏️</a>
-                                        <a href="/pages/games/delete.php?id=<?= $game['id'] ?>"
-                                           onclick="return confirm('Supprimer ce jeu ?')"
-                                           class="text-xs text-red-400 hover:text-red-300 transition">🗑️</a>
+                                        <form action="/pages/games/delete.php" method="POST" class="inline"
+                                              onsubmit="return confirm('Supprimer ce jeu ?')">
+                                            <?= csrfField() ?>
+                                            <input type="hidden" name="id" value="<?= $game['id'] ?>">
+                                            <button type="submit"
+                                                    class="text-xs text-red-400 hover:text-red-300 transition cursor-pointer">
+                                                🗑️
+                                            </button>
+                                        </form>
                                     </div>
                                 <?php endif; ?>
                             </div>

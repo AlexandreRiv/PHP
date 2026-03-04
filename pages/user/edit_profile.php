@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 requireLogin();
 
 $pageTitle = 'Modifier le profil — OAPDN';
@@ -16,6 +16,8 @@ $errors = [];
 $old = $user;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrf();
+
     $old = [
             'username' => trim($_POST['username'] ?? ''),
             'email' => trim($_POST['email'] ?? ''),
@@ -43,8 +45,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if (empty($errors)) {
         if (!empty($newPassword)) {
-            $hash = password_hash($newPassword, PASSWORD_BCRYPT);
-            $stmt = $db->prepare('UPDATE user SET username=?, email=?,  password_hash=? WHERE id=?');
+            $hash = password_hash($newPassword, PASSWORD_DEFAULT);
+            $stmt = $db->prepare('UPDATE user SET username=?, email=?, password_hash=? WHERE id=?');
             $stmt->execute([$old['username'], $old['email'], $hash, $userId]);
         } else {
             $stmt = $db->prepare('UPDATE user SET username=?, email=? WHERE id=?');
@@ -71,6 +73,7 @@ include __DIR__ . '/../../includes/header.php';
         <?php endif; ?>
 
         <form action="" method="POST" class="space-y-5">
+            <?= csrfField() ?>
             <div>
                 <label for="username" class="block text-sm font-medium text-gold-light mb-1">Nom d'utilisateur</label>
                 <input type="text" id="username" name="username" required value="<?= e($old['username']) ?>"
@@ -134,6 +137,7 @@ include __DIR__ . '/../../includes/header.php';
                 Cette action est irréversible. Entrez votre mot de passe pour confirmer la suppression.
             </p>
             <form action="/pages/user/delete_account.php" method="POST" class="space-y-4">
+                <?= csrfField() ?>
                 <div>
                     <label for="delete-password" class="block text-sm font-medium text-gold-light mb-1">Mot de passe</label>
                     <input type="password" id="delete-password" name="password" required placeholder="••••••••"

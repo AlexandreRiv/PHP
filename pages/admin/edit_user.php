@@ -18,8 +18,9 @@ $errors = [];
 $old = $user;
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    verifyCsrf();
+
     $old = [
-        'username' => trim($_POST['username'] ?? ''),
         'email' => trim($_POST['email'] ?? ''),
         'role' => $_POST['role'] ?? 'user',
     ];
@@ -62,6 +63,7 @@ include __DIR__ . '/../../includes/header.php';
         <?php endif; ?>
 
         <form action="" method="POST" class="space-y-5">
+            <?= csrfField() ?>
             <div>
                 <label for="username" class="block text-sm font-medium text-gold-light mb-1">Nom d'utilisateur</label>
                 <input type="text" id="username" name="username" required value="<?= e($old['username']) ?>"

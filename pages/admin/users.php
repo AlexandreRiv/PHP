@@ -1,7 +1,7 @@
 <?php
-session_start();
 require_once __DIR__ . '/../../includes/functions.php';
 require_once __DIR__ . '/../../includes/auth.php';
+secureSessionStart();
 requireAdmin();
 
 $pageTitle = 'Utilisateurs — Admin';
@@ -50,13 +50,19 @@ include __DIR__ . '/../../includes/header.php';
                             </td>
                             <td class="px-6 py-4 text-gray-500"><?= date('d/m/Y', strtotime($u['created_at'])) ?></td>
                             <td class="px-6 py-4">
-                                <div class="flex gap-3">
+                                <div class="flex gap-3 items-center">
                                     <a href="/pages/admin/edit_user.php?id=<?= $u['id'] ?>"
                                        class="text-gold hover:text-gold-light transition">✏️ Éditer</a>
                                     <?php if ($u['id'] !== $_SESSION['user']['id']): ?>
-                                        <a href="/pages/admin/delete_user.php?id=<?= $u['id'] ?>"
-                                           onclick="return confirm('Supprimer <?= e($u['username']) ?> ?')"
-                                           class="text-red-400 hover:text-red-300 transition">🗑️</a>
+                                        <form action="/pages/admin/delete_user.php" method="POST" class="inline"
+                                              onsubmit="return confirm('Supprimer <?= e($u['username']) ?> ?')">
+                                            <?= csrfField() ?>
+                                            <input type="hidden" name="id" value="<?= $u['id'] ?>">
+                                            <button type="submit"
+                                                    class="text-red-400 hover:text-red-300 transition cursor-pointer">
+                                                🗑️
+                                            </button>
+                                        </form>
                                     <?php endif; ?>
                                 </div>
                             </td>
