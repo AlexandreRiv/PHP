@@ -134,6 +134,10 @@ include __DIR__ . '/../../includes/header.php';
                                                 h</p>
                                             <p class="text-gray-500 text-xs">de jeu</p>
                                         </div>
+                                        <a href="/pages/user/edit_collection_game.php?game_id=<?= $ug['id'] ?>"
+                                           class="border border-gold/50 text-gold px-3 py-1.5 rounded-lg hover:bg-gold/10 transition text-xs">
+                                            ✏️ Stats
+                                        </a>
                                         <form action="/pages/games/remove_from_collection.php" method="POST" class="inline"
                                               onsubmit="return confirm('Retirer ce jeu de votre collection ?')">
                                             <?= csrfField() ?>

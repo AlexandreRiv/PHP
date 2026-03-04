@@ -163,8 +163,12 @@ include __DIR__ . '/../../includes/header.php';
             $stmtCol->execute([$_SESSION['user']['id'], $game['id']]);
             $inCollection = (bool)$stmtCol->fetch();
             ?>
-            <div class="mt-6">
+            <div class="mt-6 flex flex-wrap gap-3">
                 <?php if ($inCollection): ?>
+                    <a href="/pages/user/edit_collection_game.php?game_id=<?= $game['id'] ?>"
+                       class="inline-block border border-gold/50 text-gold px-6 py-2.5 rounded-lg hover:bg-gold/10 transition font-medium text-sm">
+                        ✏️ Modifier mes stats
+                    </a>
                     <form action="/pages/games/remove_from_collection.php" method="POST" class="inline"
                           onsubmit="return confirm('Retirer ce jeu de votre collection ?')">
                         <?= csrfField() ?>
