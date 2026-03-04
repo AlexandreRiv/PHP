@@ -18,3 +18,8 @@
 # Système
 .DS_Store
 Thumbs.db
+
+database/database.sqlite
+
+# Scripts utilitaires temporaires
+migrate_price.php

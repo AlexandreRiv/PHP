@@ -6,7 +6,6 @@ CREATE TABLE IF NOT EXISTS user (
                                     email TEXT NOT NULL UNIQUE,
                                     password_hash TEXT NOT NULL,
                                     role TEXT NOT NULL DEFAULT 'user' CHECK (role IN ('admin', 'user')),
-                                    gender TEXT NOT NULL CHECK (gender IN ('male', 'female', 'other')),
                                     created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -16,6 +15,7 @@ CREATE TABLE IF NOT EXISTS games (
                                      type TEXT NOT NULL,
                                      description TEXT,
                                      image TEXT,
+                                     price REAL NOT NULL DEFAULT 0,
                                      created_at TEXT NOT NULL DEFAULT (datetime('now'))
 );
 
@@ -25,7 +25,6 @@ CREATE TABLE IF NOT EXISTS user_games (
                                           game_id INTEGER NOT NULL,
                                           added_at TEXT NOT NULL DEFAULT (datetime('now')),
                                           playtime_hours INTEGER NOT NULL DEFAULT 0,
-                                          death_date TEXT,
                                           FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
                                           FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
 );
@@ -47,3 +46,12 @@ CREATE TABLE IF NOT EXISTS user_achievements (
                                                  FOREIGN KEY (user_id) REFERENCES user(id) ON DELETE CASCADE,
                                                  FOREIGN KEY (achievement_id) REFERENCES achievements(id) ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS levels (
+                                      id INTEGER PRIMARY KEY AUTOINCREMENT,
+                                      game_id INTEGER NOT NULL,
+                                      name TEXT NOT NULL,
+                                      difficulty TEXT NOT NULL DEFAULT 'medium' CHECK (difficulty IN ('easy', 'medium', 'hard', 'extreme')),
+    description TEXT,
+    FOREIGN KEY (game_id) REFERENCES games(id) ON DELETE CASCADE
+    );
