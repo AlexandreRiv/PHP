@@ -83,6 +83,42 @@ include __DIR__ . '/../../includes/header.php';
             </div>
         <?php endif; ?>
 
+        <?php
+        $stmtLvl = $db->prepare('SELECT * FROM levels WHERE game_id = ? ORDER BY CASE difficulty WHEN "easy" THEN 1 WHEN "medium" THEN 2 WHEN "hard" THEN 3 WHEN "extreme" THEN 4 END');
+        $stmtLvl->execute([$id]);
+        $levels = $stmtLvl->fetchAll();
+        ?>
+        <?php if (!empty($levels)): ?>
+            <div class="bg-linear-to-br from-tft-card to-tft-card-deep border border-tft-border rounded-xl overflow-hidden mb-8">
+                <div class="px-6 py-4 border-b border-tft-border">
+                    <h2 class="font-tft text-xl font-bold text-gold">Niveaux</h2>
+                </div>
+                <div class="p-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <?php foreach ($levels as $lvl):
+                        $diffConfig = match ($lvl['difficulty']) {
+                            'easy' => ['label' => 'Facile', 'color' => 'text-green-400', 'bg' => 'bg-green-500/10', 'border' => 'border-green-500/30'],
+                            'medium' => ['label' => 'Moyen', 'color' => 'text-blue-400', 'bg' => 'bg-blue-500/10', 'border' => 'border-blue-500/30'],
+                            'hard' => ['label' => 'Difficile', 'color' => 'text-orange-400', 'bg' => 'bg-orange-500/10', 'border' => 'border-orange-500/30'],
+                            'extreme' => ['label' => 'Extrême', 'color' => 'text-red-400', 'bg' => 'bg-red-500/10', 'border' => 'border-red-500/30'],
+                            default => ['label' => 'Moyen', 'color' => 'text-gray-400', 'bg' => 'bg-gray-500/10', 'border' => 'border-gray-500/30'],
+                        };
+                        ?>
+                        <div class="flex items-start gap-3 p-3 rounded-lg border <?= $diffConfig['border'] ?> <?= $diffConfig['bg'] ?>">
+                            <div class="flex-1">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <p class="text-sm font-medium text-gray-200"><?= e($lvl['name']) ?></p>
+                                    <span class="text-[10px] font-bold uppercase px-2 py-0.5 rounded-full <?= $diffConfig['color'] ?> <?= $diffConfig['bg'] ?>">
+                            <?= $diffConfig['label'] ?>
+                        </span>
+                                </div>
+                                <p class="text-xs text-gray-500 mt-0.5"><?= e($lvl['description'] ?? '') ?></p>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
         <?php if (!empty($achievements)): ?>
             <div class="bg-linear-to-br from-tft-card to-tft-card-deep border border-tft-border rounded-xl overflow-hidden">
                 <div class="px-6 py-4 border-b border-tft-border">
